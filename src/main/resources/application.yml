@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: mongotomysql
+  profiles:
+    active: local
+---
+spring:
+  main:
+    banner-mode: off
+  config:
+    activate:
+      on-profile: local
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+    show-sql: true
+  data:
+    mongodb:
+      uri: ${MONGODB_URL}
+
+logging:
+  level:
+    root: warn
+    org:
+      hibernate:
+        SQL: error #debug
+        type:
+          descriptor:
+            sql:
+              BasicBinder: error
+        orm:
+          jdbc:
+            bind: error #trace
